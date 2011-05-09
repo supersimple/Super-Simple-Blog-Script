@@ -1,0 +1,132 @@
+<?php
+
+/*********************************************
+
+edit_settings.php
+
+this file will edit selected global constants
+for the blog.
+
+
+*********************************************/
+
+
+
+//array of all constants that can be edited
+$constants= array('pageTitle',
+					'perPage', 
+					'blogPageName', 
+					'USERS', 
+					'MULTIUSERS', 
+					'imagesPerEntry', 
+					'COMMENTS', 
+					'TABLENAME', 
+					'TIMEOFFSET', 
+					'rssFileName', 
+					'rssLink', 
+					'rssDesc', 
+					'users_login', 
+					'show_global_nav', 
+					'global_nav_items');
+
+require_once('../settings.php'); //include global prefs
+require_once('includes/header.php'); // include global header
+
+//****HANDLE FORM*****************************************************************************
+
+if(isset($submit)){
+	
+	foreach($constants as $_cons){
+		
+		echo stripslashes($_POST[$_cons])."\n";
+	
+	}
+	
+}
+
+
+//********************************************************************************************
+
+
+
+
+
+//formatting table
+echo "<tr><td width=\"150\">KEY</td><td>VALUE</td></tr>";
+
+
+function get_globals($file, $needle){
+
+	if($match = strstr($file, $needle)){
+	
+			$limit = strpos($match, "\n");
+
+			$limited = substr($match, 0, $limit +1).'<br />';
+			
+			$keypos = strpos($limited, "=");
+			
+			$key = substr($match, 0, $keypos);
+			
+			$str_from_key = array('$', ' ');
+			$keyName = str_replace($str_from_key, '', $key);
+			
+			
+			$valpos = strpos($limited, ";");
+			
+			$value = substr($match, $keypos+1, ($valpos - $keypos -1));
+			$value_noquotes = str_replace('"', '&quot;', $value);
+			
+			//build an edit string
+			$edit_string = "<tr><td>".$key."= </td><td><input type=\"text\" name=\"$keyName\" style=\"width:450px;\" value=\"$value_noquotes\" /></td></tr>";
+			
+			return $edit_string."\n";
+	}
+
+}
+
+
+$_global_constants = fopen('../settings.php', r);
+
+$e = fread($_global_constants, 10960);
+
+fclose($_global_constants);
+
+
+//open a form
+?>
+
+<form name="edit_config" method="post" action="<?=$_SERVER['PHP_SELF']?>">
+
+
+<?
+
+//new array to hold new values
+$new_constants = array();
+
+for($i=0; $i<count($constants); $i++){
+	
+	$var = get_globals($e, $constants[$i]);
+
+	array_push($new_constants, $var);
+	
+	echo $var;	
+}
+
+//echo "\n=======================================\n<br />";
+
+//print_r($new_constants);
+
+
+
+
+
+/******************************************/
+
+
+?>
+<tr><td colspan="2">
+<input type="submit" value="SUBMIT" name="submit" style="width:100px;" />
+</td></tr>
+</form>
+
+</table></div></div></body></html>

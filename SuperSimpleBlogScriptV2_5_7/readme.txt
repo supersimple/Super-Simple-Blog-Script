@@ -29,3 +29,6 @@ Updates in this version:
 v2.5.3
 - modified sql query in index.php to fix bug with posts not sorting correctly 
 	by date
+	
+v3.0.0
+- removing need for mySQL and transferring data to XML 

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <settings>
 	<basepath>str</basepath>
 	<baseurl>str</baseurl>
 	<pagetitle>str</pagetitle>
 	<postsperpage>int</postsperpage>
 	<blogpagefilename>str</blogpagefilename>
-	<user password="SHA1">str</user>
+	<user id="int" password="SHA1">str</user>
 	<allowcomments>bool</allowcomments>
 	<timeoffsetfromserver>int</timeoffsetfromserver>
 	<rssdescription>str</rssdescription>

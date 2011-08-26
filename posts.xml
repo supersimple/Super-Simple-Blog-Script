@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<posts>
+	<post>
+		<guid>str</guid>
+		<timestamp>int</timestamp>
+		<posttitle>str</baseurl>
+		<posttext>int</posttext>
+		<postimage imageid="int">str</postimage>
+		<postimage imageid="int">str</postimage>
+		<postimage imageid="int">str</postimage>
+		<postedby>int</postedby>
+		<comment timestamp="int" url="str" name="str">str</comment>
+		<comment timestamp="int" url="str" name="str">str</comment>
+		<comment timestamp="int" url="str" name="str">str</comment>
+		<comment timestamp="int" url="str" name="str">str</comment>
+		<active>bool</active>
+	</post>
+</posts>

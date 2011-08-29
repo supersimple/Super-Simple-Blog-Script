@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <posts>
 	<post>
-		<guid>str</guid>
+		<guid>ABC1234</guid>
 		<timestamp>int</timestamp>
-		<posttitle>str</baseurl>
+		<posttitle>str</posttitle>
 		<posttext>int</posttext>
 		<postimage imageid="int">str</postimage>
 		<postimage imageid="int">str</postimage>
 		<postimage imageid="int">str</postimage>
 		<postedby>int</postedby>
+		<comment timestamp="4123546" url="str" name="str">str</comment>
 		<comment timestamp="int" url="str" name="str">str</comment>
+		<comment timestamp="int" url="str" name="str">str</comment>
+		<comment timestamp="int" url="str" name="str">str</comment>
+		<active>bool</active>
+	</post>
+	<post>
+		<guid>XYZ7890</guid>
+		<timestamp>int</timestamp>
+		<posttitle>str</posttitle>
+		<posttext>int</posttext>
+		<postimage imageid="int">str</postimage>
+		<postimage imageid="int">str</postimage>
+		<postimage imageid="int">str</postimage>
+		<postedby>int</postedby>
+		<comment timestamp="123456798" url="str" name="str">str</comment>
 		<comment timestamp="int" url="str" name="str">str</comment>
 		<comment timestamp="int" url="str" name="str">str</comment>
 		<comment timestamp="int" url="str" name="str">str</comment>

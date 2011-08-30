@@ -143,27 +143,19 @@ Class XMLParser
 	//method to update settings
 	public function updateSettings($settings)
 	{
-		/*
-		<settings>
-	<basepath>str</basepath>
-	<baseurl>str</baseurl>
-	<pagetitle>str</pagetitle>
-	<postsperpage>int</postsperpage>
-	<blogpagefilename>str</blogpagefilename>
-	<user id="int" password="SHA1">str</user>
-	<allowcomments>bool</allowcomments>
-	<timeoffsetfromserver>int</timeoffsetfromserver>
-	<rssdescription>str</rssdescription>
-</settings>
-*/
 		//this method takes an array,containing 1 or more of the settings nodes to be updated
-		$setting = $this->xmlstr;
+		$xml = $this->xmlstr;
+
+		if(isset($settings['basepath'])){ $xml->basepath = $settings['basepath']; }
+		if(isset($settings['baseurl'])){ $xml->baseurl = $settings['baseurl']; }
+		if(isset($settings['pagetitle'])){ $xml->pagetitle = $settings['pagetitle']; }
+		if(isset($settings['postsperpage'])){ $xml->postsperpage = $settings['postsperpage']; }
+		if(isset($settings['blogpagefilename'])){ $xml->blogpagefilename = $settings['blogpagefilename']; }
+		if(isset($settings['allowcomments'])){ $xml->allowcomments = $settings['allowcomments']; }
+		if(isset($settings['timeoffsetfromserver'])){ $xml->timeoffsetfromserver = $settings['timeoffsetfromserver']; }
+		if(isset($settings['rssdescription'])){ $xml->rssdescription = $settings['rssdescription']; }
 		
-		foreach($settings as $node=>$value)
-		{
-				
-		}
-		
+		$xml->asXML($this->xmlfile);
 	}
 	
 	private function getAllUsers()
@@ -172,8 +164,8 @@ Class XMLParser
 		//get an array of users
 		$users = array();
 		
-		$setting = $this->xmlstr;
-					foreach($setting->user as $user)
+		$xml = $this->xmlstr;
+					foreach($xml->user as $user)
 					{
 						$users[] = array(
 							'id'=>(int)$user['id'],
@@ -186,19 +178,37 @@ Class XMLParser
 		
 	}
 	
-	private function getUser($uid)
+	public function getUser($uid)
 	{
-	
+		$xml = $this->xmlstr;
+					foreach($xml->user as $user)
+					{
+						if((int)$user['id'] == $uid)
+						{
+							return array(
+								'id'=>(int)$user['id'],
+								'password'=>(string)$user['password'],
+								'username'=>(string)$user
+							);
+						}
+					}
 	}
 	
-	private function addNewUser()
+	public function addNewUser($user)
 	{
-	
+		$xml = $this->xmlstr;
+		
+		$newuser = $xml->addChild('user',$user['name']);
+		$newuser->addAttribute('id',$user['id']);
+		$newuser->addAttribute('password',SHA1($user['password']));
+		
+		//write the file
+		$xml->asXML($this->xmlfile);
 	}
 	
-	private function deleteUser($uid)
+	public function deleteUser($uid)
 	{
-	
+		//make sure this isnt the only user - we need to always have 1 user
 	}
 	
 	//method to add a new post to the posts XML
@@ -227,12 +237,55 @@ Class XMLParser
 	
 	public function deletePost($guid)
 	{
-	
+		$xml = $this->xmlstr;
+		
+		for($p=0;$p<count($xml->post);$p++)
+		{
+			if((string)$xml->post[$p]->guid == $guid)
+			{
+				unset($xml->post[$p]);
+			}
+		}
+		
+		//write the file
+		$xml->asXML($this->xmlfile);
+		
 	}
 	
-	public function editPost($guid,$post)
+	public function editPost($guid,$postinfo)
 	{
-	
+		$xml = $this->xmlstr;
+		
+		foreach($xml->post as $post)
+		{
+			if((string)$post->guid == $guid)
+			{
+				if(isset($postinfo['posttitle'])){ $post->posttitle = '<![CDATA['.$postinfo['posttitle'].']]>'; }
+				if(isset($postinfo['posttext'])){ $post->posttext = '<![CDATA['.$postinfo['posttext'].']]>'; }
+				if(isset($postinfo['active'])){ $post->active = $postinfo['active']; }
+				
+				//see if any of the post images were removed
+				for($i=0;$i<count($post->postimage);$i++)
+				{
+					$postimage = $post->postimage[$i];
+					$this_image_id = $postimage['imageid'];
+					if(!array_key_exists($this_image_id,$postinfo['postimages']))
+					{
+						//delete this postimage
+						unset($postimage);
+					}
+				}
+				
+				foreach($postinfo['postimages'] as $imageid=>$postimage)
+				{
+					$newpostimage = $post->addChild('postimage', $postimage);
+					$newpostimage->addAttribute('imageid', $imageid);
+				}
+			}
+		}
+				
+		//write the file
+		$xml->asXML($this->xmlfile);
 	}
 	
 	//method to add a comment to the posts XML
@@ -258,15 +311,44 @@ Class XMLParser
 		
 }
 
+	//method to delete a comment from the posts XML
+	public function deleteComment($guid,$timestamp)
+	{
+		$xml = $this->xmlstr;
+		
+		//look for the post with this guid
+		foreach($xml->post as $post)
+		{
+			if($post->guid == $guid)
+			{
+				//find the comment in here
+				for($c=0;$c<count($post->comment);$c++)
+				{
+					if($post->comment[$c]['timestamp'] == $timestamp){
+						unset($post->comment[$c]);
+						continue 2;
+					}
+				}
+			}
+		}
+		
+		//write the file
+		$xml->asXML($this->xmlfile);
+	}
 
 
 //Just for testing////////////////////////////////////////////////////
 $xmlobj = new XMLParser("posts.xml");
 
 #$xmlobj->addNewPost(array('posttitle'=>htmlentities('Hey, man!'), 'posttext'=>htmlentities('This is so cool & stuff.\r\nAre you serious? "Yes, I am."'), 'postedby'=>1, 'active'=>1, 'postimage' => array('/file/path/images/imagename.jpg')));
-$xmlobj->addNewComment('XYZ7890',array('text'=>htmlentities('I think you need to check out http://cnn.com'),'url'=>htmlentities('http://twitter.com&user=heavy_t'),'name'=>htmlentities('Todd Resudek')));
+#$xmlobj->addNewComment('XYZ7890',array('text'=>htmlentities('I think you need to check out http://cnn.com'),'url'=>htmlentities('http://twitter.com&user=heavy_t'),'name'=>htmlentities('Todd Resudek')));
 
-$posts = $xmlobj->getAllPosts();
-print_r($posts);
+#$xmlobj->updateSettings(array('basepath'=>'/users/var/www/'));
+#print_r($xmlobj->getUser(987));
+
+$xmlobj->deletePost('835ec42cb6db64ded93835d545007e04');
+
+#$posts = $xmlobj->getAllPosts();
+#print_r($posts);
 
 ?>

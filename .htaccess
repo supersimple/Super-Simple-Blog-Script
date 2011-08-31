@@ -1,0 +1,5 @@
+RewriteEngine on
+Options +FollowSymLinks
+
+RewriteRule ^\.htaccess$ - [F]
+RewriteRule ^settings\.xml$ - [F]

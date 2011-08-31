@@ -209,6 +209,23 @@ Class XMLParser
 	public function deleteUser($uid)
 	{
 		//make sure this isnt the only user - we need to always have 1 user
+		$xml = $this->xmlstr;
+		
+		if(count($xml->user) > 1)
+		{
+			
+			for($u=0;$u<count($xml->user);$u++)
+			{
+				if($xml->user[$u]['id'] == $uid)
+				{
+					unset($xml->user[$u]);
+					return true;
+				}
+			}
+				
+		}else{
+			return false;
+		}
 	}
 	
 	//method to add a new post to the posts XML
@@ -309,7 +326,7 @@ Class XMLParser
 		$xml->asXML($this->xmlfile);
 	}
 		
-}
+
 
 	//method to delete a comment from the posts XML
 	public function deleteComment($guid,$timestamp)
@@ -336,9 +353,10 @@ Class XMLParser
 		$xml->asXML($this->xmlfile);
 	}
 
+}
 
 //Just for testing////////////////////////////////////////////////////
-$xmlobj = new XMLParser("posts.xml");
+$xmlobj = new XMLParser("settings.xml");
 
 #$xmlobj->addNewPost(array('posttitle'=>htmlentities('Hey, man!'), 'posttext'=>htmlentities('This is so cool & stuff.\r\nAre you serious? "Yes, I am."'), 'postedby'=>1, 'active'=>1, 'postimage' => array('/file/path/images/imagename.jpg')));
 #$xmlobj->addNewComment('XYZ7890',array('text'=>htmlentities('I think you need to check out http://cnn.com'),'url'=>htmlentities('http://twitter.com&user=heavy_t'),'name'=>htmlentities('Todd Resudek')));
@@ -346,7 +364,7 @@ $xmlobj = new XMLParser("posts.xml");
 #$xmlobj->updateSettings(array('basepath'=>'/users/var/www/'));
 #print_r($xmlobj->getUser(987));
 
-$xmlobj->deletePost('835ec42cb6db64ded93835d545007e04');
+#$xmlobj->deletePost('835ec42cb6db64ded93835d545007e04');
 
 #$posts = $xmlobj->getAllPosts();
 #print_r($posts);

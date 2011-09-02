@@ -11,6 +11,9 @@ function validateSetupForm(){
 	var blogpagefilename = $("#blogpagefilename").val();
 	var allowcomments = $("#allowcomments").val();
 	var timeoffsetfromserver = $("#timeoffsetfromserver").val();
+	var username = $("#username").val();
+	var password = $("#password").val();
+	var confirm_password = $("#confirm_password").val();
 	
 	if(isEmpty(basepath)){
 		err_count++;
@@ -61,6 +64,39 @@ function validateSetupForm(){
 		$("#timeoffsetfromserver").removeClass('fail');
 		$("#timeoffsetfromserver").addClass('pass');
 	}
+	
+	if(isEmpty(username) || !isEmail(username)){
+		err_count++;
+		error += '<br /><strong>Username</strong> - Your username should be your email address.';
+		$("#username").removeClass('pass');
+		$("#username").addClass('fail');
+	}else{
+		$("#username").removeClass('fail');
+		$("#username").addClass('pass');
+	}
+	
+	if(isEmpty(password) || isEmpty(confirm_password)){
+		err_count++;
+		error += '<br /><strong>Password</strong> - You must set a password.';
+		$("#password").removeClass('pass');
+		$("#password").addClass('fail');
+		$("#confirm_password").removeClass('pass');
+		$("#confirm_password").addClass('fail');
+	}else{
+		if(password != confirm_password){
+		err_count++;
+		error += '<br /><strong>Password</strong> - Your password and confirmation must match.';
+		$("#password").removeClass('pass');
+		$("#password").addClass('fail');
+		$("#confirm_password").removeClass('pass');
+		$("#confirm_password").addClass('fail');
+		}else{
+		$("#password").removeClass('fail');
+		$("#password").addClass('pass');
+		$("#confirm_password").removeClass('fail');
+		$("#confirm_password").addClass('pass');
+		}
+	}	
 	
 	//not validated
 	$("#pagetitle").addClass('pass');

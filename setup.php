@@ -34,6 +34,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Super Simple Blog Script V3 Setup</title>
 <link href="http://fonts.googleapis.com/css?family=Coustard" rel="stylesheet" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" media="all" href="screen.css" type="text/css" /> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/validation.js"></script>
@@ -64,7 +65,8 @@ $(document).ready(function(){
 	}
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']?>" method="get" id="setup_form" name="setup_form" onsubmit="return validateSetupForm();">
+<form action="setup-complete.php" method="post" id="setup_form" name="setup_form" onsubmit="return validateSetupForm();">
+	<h3>First, set up your options</h3>
 	<label for="basepath">Base File Path</label><input type="text" class="txt" name="basepath" id="basepath" value="<?php echo $_basePath ?>" />
 	<div class="hr-clr">&nbsp;</div>
 	<label for="baseurl">Installed URL</label><input type="text" class="txt" name="baseurl" id="baseurl" value="<?php echo $_baseUrl ?>" />
@@ -81,7 +83,14 @@ $(document).ready(function(){
 	<div class="hr-clr">&nbsp;</div>
 	<label for="timeoffsetfromserver">Time Offset from Server</label><input type="text" class="txt" name="timeoffsetfromserver" id="timeoffsetfromserver" value="" />
 	<div class="hr-line">&nbsp;</div>
-	<input class="btn" type="image" src="im/btn_submit.png" alt="Submit" style="margin-right:142px;" />
+	<h3>Now, set up the first user</h3>
+	<label for="username">Username/Email Address</label><input type="text" class="txt" name="username" id="username" value="" />
+	<div class="hr-clr">&nbsp;</div>
+	<label for="password">Password</label><input type="password" class="txt" name="password" id="password" value="" />
+	<div class="hr-clr">&nbsp;</div>
+	<label for="confirm_password">Confirm Password</label><input type="password" class="txt" name="confirm_password" id="confirm_password" value="" />
+	<div class="hr-line">&nbsp;</div>
+	<input class="btn" type="submit" name="submit" value="Submit &raquo;" style="margin-right:142px;" />
 </form>
 </div>
 </body>

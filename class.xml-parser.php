@@ -139,9 +139,18 @@ Class XMLParser
 		return $settings;
 	}
 	
+	//method to get one setting
+	public function getSetting($name)
+	{
+			$settings = $this->xmlstr;
+			$setting = (string)$settings->$name;
+
+		return $setting;
+	}
+	
 	
 	//method to update settings
-	public function updateSettings($settings)
+	public function updateSettings($settings,$first_run=false)
 	{
 		//this method takes an array,containing 1 or more of the settings nodes to be updated
 		$xml = $this->xmlstr;
@@ -154,6 +163,21 @@ Class XMLParser
 		if(isset($settings['allowcomments'])){ $xml->allowcomments = $settings['allowcomments']; }
 		if(isset($settings['timeoffsetfromserver'])){ $xml->timeoffsetfromserver = $settings['timeoffsetfromserver']; }
 		if(isset($settings['rssdescription'])){ $xml->rssdescription = $settings['rssdescription']; }
+		
+		if($first_run)
+		{
+			$this->deleteAllUsers();
+		}
+		
+		if(isset($settings['username']))
+		{ 
+			$user = array();
+			$user['name']=$settings['username'];
+			$user['id']=md5($settings['username']);
+			$user['password']=sha1($settings['password']);
+			
+			$this->addNewUser($user);
+		}
 		
 		$xml->asXML($this->xmlfile);
 	}
@@ -193,14 +217,23 @@ Class XMLParser
 						}
 					}
 	}
-	
+
+	public function deleteAllUsers()
+	{
+		$xml = $this->xmlstr;
+		unset($xml->user);
+		
+		//write the file
+		$xml->asXML($this->xmlfile);
+	}
+		
 	public function addNewUser($user)
 	{
 		$xml = $this->xmlstr;
 		
 		$newuser = $xml->addChild('user',$user['name']);
 		$newuser->addAttribute('id',$user['id']);
-		$newuser->addAttribute('password',SHA1($user['password']));
+		$newuser->addAttribute('password',$user['password']);
 		
 		//write the file
 		$xml->asXML($this->xmlfile);
@@ -352,8 +385,26 @@ Class XMLParser
 		//write the file
 		$xml->asXML($this->xmlfile);
 	}
+	
+	
+	/* LOGIN METHODS */
+	public function checkLogin($user,$pwd)
+	{
+		
+		$xml = $this->xmlstr;
+			
+		for($u=0;$u<count($xml->user);$u++)
+		{
+			if($xml->user[$u] == $user && $xml->user[$u]['password'] == sha1($pwd))
+			{
+				return true;
+			}
+		}
+				
+		return false;
+	}
 
-}
+} /* END OF CLASS */
 
 //Just for testing////////////////////////////////////////////////////
 $xmlobj = new XMLParser("settings.xml");

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-	<basepath>/users/var/www/</basepath>
-	<baseurl>str</baseurl>
-	<pagetitle>str</pagetitle>
-	<postsperpage>int</postsperpage>
-	<blogpagefilename>str</blogpagefilename>
-	<user id="987" password="SHA1">str</user>
-	<allowcomments>bool</allowcomments>
-	<timeoffsetfromserver>int</timeoffsetfromserver>
-	<rssdescription>str</rssdescription>
-</settings>
+	<basepath>/Users/todd/Sites/Super-Simple-Blog-Script</basepath>
+	<baseurl>localhost:8888/Super-Simple-Blog-Script/</baseurl>
+	<pagetitle>Test Blog</pagetitle>
+	<postsperpage>5</postsperpage>
+	<blogpagefilename>index.php</blogpagefilename>
+	
+	<allowcomments>1</allowcomments>
+	<timeoffsetfromserver>0</timeoffsetfromserver>
+	<rssdescription></rssdescription>
+	
+<user id="a07852bbb36ae001b8445de319a2a8bf" password="7130f7d031168742260ab9fb9935db77084817fb">toddresudek@gmail.com</user></settings>

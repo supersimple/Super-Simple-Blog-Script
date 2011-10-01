@@ -99,13 +99,18 @@ background-image: -moz-linear-gradient(0% 100% 90deg,#447aa3,#094370);
 background-color: #0a4c7f;
 }
 
-#login_container{width:40%;margin:100px 30%;padding:20px;-moz-border-radius:12px;border-radius:12px;-moz-box-shadow: 1px 1px 1px #C7C7C7;-webkit-box-shadow: 1px 1px 1px #C7C7C7;box-shadow: 0px 0px 3px #000;background-color:#454545;float:left;clear:both;background:rgba(60,60,60,0.70);}
+#login_container{width:360px;margin:100px 200px;padding:0px;-moz-border-radius:12px;border-radius:12px;-moz-box-shadow: 1px 1px 1px #C7C7C7;-webkit-box-shadow: 1px 1px 1px #C7C7C7;box-shadow: 0px 0px 3px #000;background-color:#454545;float:left;clear:both;background:rgba(60,60,60,0.70);}
 
-form#login_form{float:left;clear:both;padding:0;margin:0;width:100%;display:inline;}
+form#login_form{float:left;clear:both;padding:20px;margin:0;width:300px;display:inline;-moz-border-radius:12px;border-radius:12px;border:10px solid rgba(200,200,200,0.10);}
 form#login_form h3{font-size:32px;line-height:48px;padding:0;margin:0 0 12px;color:#3f78a3;text-shadow: 0px 1px 1px #000;float:left;clear:both;width:100%;}
 form#login_form label{width:95px;}
-form#login_form input.txt{width:189px;}
-
+form#login_form input.txt{width:189px;outline:none;
+    transition: all 0.25s ease-in-out;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;}
+form#login_form input.txt:focus{box-shadow: 0 0 5px rgba(255,255,255, 1);
+    -webkit-box-shadow: 0 0 5px rgba(255,255,255, 1); 
+    -moz-box-shadow: 0 0 5px rgba(255,255,255, 1);}
 
 input.txt.fail{background:#FFF url(im/fail.png) no-repeat center right;}
 input.txt.pass{background:#FFF url(im/pass.png) no-repeat center right;}

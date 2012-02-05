@@ -226,7 +226,7 @@ copyright 2006
 
 //****GET PAGE NUMBER********************************************************************	
 
-if(isset($_GET['pg'])){$page = $_GET['pg'];}else{$page=1;} //finds the page number from the URL
+if(isset($_GET['pg']) && $_GET['pg']>0){$page = $_GET['pg'];}else{$page=1;} //finds the page number from the URL
 $ePage = $page * $perPage; //tells the last posting on the page. (eg. 7 per page, page 2 the last posting is number 14)
 $bPage = $ePage - $perPage; //counts back to the first listing on each page
 

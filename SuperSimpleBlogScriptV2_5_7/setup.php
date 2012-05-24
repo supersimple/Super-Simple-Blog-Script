@@ -234,9 +234,7 @@ $_settingsStr .= '>';
 
 //****CREATE THE DATABASE TABLE************************************************************************	
 		
-		#This query has been causing issues on some installs, so i am reverting back to the previous version
-		#$query = "CREATE TABLE `$SET9` (`comment` mediumtext NOT NULL, `time` timestamp(19) NOT NULL default CURRENT_TIMESTAMP, `image` TEXT NOT NULL default '', `title` varchar(40) NOT NULL default '', `uid` int(4) NOT NULL auto_increment, `comments` int(11) NOT NULL default '0',  `postedBy` varchar(40) NOT NULL default '', PRIMARY KEY  (`uid`))";
-		$query = "CREATE TABLE `$SET9` (`comment` mediumtext NOT NULL, `time` timestamp(14) NOT NULL, `image` TEXT NOT NULL default '', `title` varchar(80) NOT NULL default '', `uid` int(4) NOT NULL auto_increment, `comments` int(11) NOT NULL default '0',  `postedBy` varchar(80) NOT NULL default '', PRIMARY KEY  (`uid`))";
+		$query = "CREATE TABLE `$SET9` (`comment` mediumtext NOT NULL, `time` timestamp NOT NULL default CURRENT_TIMESTAMP, `image` TEXT NOT NULL default '', `title` varchar(40) NOT NULL default '', `uid` int(4) NOT NULL auto_increment, `comments` int(11) NOT NULL default '0',  `postedBy` varchar(40) NOT NULL default '', PRIMARY KEY  (`uid`))";
 		$result = @mysql_query ($query);
 	
 //*****************************************************************************************************	

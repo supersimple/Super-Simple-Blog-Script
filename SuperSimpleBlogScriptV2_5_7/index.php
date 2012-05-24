@@ -151,8 +151,7 @@ if($userPassed){//check the password and username
 //****UPLOAD IMAGES************************************************************************	
 	
 	//split the filenames into an array
-	$filesArray = split(", ", $filename);
-
+	$filesArray = preg_split(", ", $filename);
 	if ($result) {
 		//Move file(s) over
 	
@@ -287,7 +286,7 @@ $dateTime = strtolower($row[3]); //makes the AM PM lowercase. CSS is set to Capi
 echo "<a id=\"{$row[4]}\"></a><p class=\"time\">$dateTime</p>"; //anchor tag set for easier linking
 echo "<h1 class=\"title\">{$row[2]}</h1>\n";
 
-$ima = split(", ", $row[1]); //build array out of images list
+$ima = preg_split(", ", $row[1]); //build array out of images list
 for($i=0; $i<count($ima); $i++){
 	if($imagesPerEntry == 1){
 		if(!empty($ima[$i])) { 

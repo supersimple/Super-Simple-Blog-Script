@@ -274,6 +274,8 @@ $query = "SELECT comment, image, title, DATE_FORMAT(time, '%M %d, %Y %h:%i%p') A
 
 }else{
 
+$_entryview = false;
+
 $query = "SELECT comment, image, title, DATE_FORMAT(time, '%M %d, %Y %h:%i%p') AS time, uid, comments, postedBy, time AS ts FROM $TABLENAME ORDER BY ts DESC LIMIT $bPage,$perPage ";
 
 }

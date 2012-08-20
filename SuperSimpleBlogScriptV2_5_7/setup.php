@@ -236,7 +236,6 @@ $_settingsStr .= '>';
 		
 	$query = "CREATE TABLE `$SET9` (`comment` mediumtext NOT NULL, `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `image` TEXT NOT NULL default '', `title` varchar(80) NOT NULL default '', `uid` int(4) NOT NULL auto_increment, `comments` int(11) NOT NULL default '0',  `postedBy` varchar(80) NOT NULL default '', PRIMARY KEY  (`uid`))";
 	$result = @mysql_query ($query);
-
 	
 //*****************************************************************************************************	
 
